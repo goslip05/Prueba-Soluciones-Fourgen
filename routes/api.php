@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PeopleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,21 @@ Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::middleware('jwt.verify')->group(function () {
-    
+
     //cierre de sesión
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     //user
     Route::get('/user', [AuthController::class, 'getInfoUser'])->name('getInfoUser');
+
+    //rutas para administración de personas
+    Route::controller(PeopleController::class)
+        ->prefix('people')->group(function () {
+            Route::get('/all', 'getPeople')->name('people.getPeople');
+            Route::post('/', 'store')->name('people.store');
+            Route::get('/{id}', 'show')->name('people.show');
+            Route::put('/{id}', 'update')->name('people.update');
+            Route::delete('/{id}', 'destroy')->name('people.destroy');
+        });
+
+    
 });
