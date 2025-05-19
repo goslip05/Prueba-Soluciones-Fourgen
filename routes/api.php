@@ -35,6 +35,8 @@ Route::middleware('jwt.verify')->group(function () {
             Route::get('/{id}', 'show')->name('people.show');
             Route::put('/{id}', 'update')->name('people.update');
             Route::delete('/{id}', 'destroy')->name('people.destroy');
+            //ruta para obtener mascotas por persona
+            Route::get('pets/{id}', 'getPetsByPerson')->name('people.getPetsByPerson');
         });
 
     //rutas para administración de mascotas

@@ -493,6 +493,68 @@
                 ]
             }
         },
+        "/api/people/pets/{id}": {
+            "get": {
+                "tags": [
+                    "Personas"
+                ],
+                "summary": "Obtener una persona con sus mascotas",
+                "operationId": "4285f72c79c7f381f7fdfe0d737a3ea5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la persona",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Información de la persona con sus mascotas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PeopleWithPetsResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "info": {
+                                            "type": "string",
+                                            "example": "Opss, no se pudieron obtener las mascotas de la persona"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Detalles del error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/pets": {
             "get": {
                 "tags": [
@@ -754,6 +816,42 @@
     },
     "components": {
         "schemas": {
+            "PeopleWithPetsResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Juan Pérez"
+                    },
+                    "document": {
+                        "type": "string",
+                        "example": "123456789"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "juan@example.com"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "3101234567"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-01-01 10:00:00"
+                    },
+                    "pets": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PetResource"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "PeopleCollection": {
                 "properties": {
                     "data": {
@@ -816,6 +914,10 @@
                     "name": {
                         "type": "string",
                         "example": "Juan Pérez"
+                    },
+                    "document": {
+                        "type": "string",
+                        "example": "123456789"
                     },
                     "email": {
                         "type": "string",

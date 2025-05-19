@@ -37,4 +37,9 @@ class PeopleRepository implements PeopleRepositoryInterface
         $person = People::findOrFail($id);
         $person->delete();
     }
+
+    public function pets($id)
+    {
+        return People::with('petsOfPerson')->findOrFail($id);
+    }
 }
