@@ -596,7 +596,7 @@
                 "tags": [
                     "Mascotas"
                 ],
-                "summary": "Registrar una nueva mascota",
+                "summary": "Registrar una nueva mascota (raza e imagen se obtienen automáticamente desde TheCatAPI)",
                 "operationId": "9523721805529edb47b46332d56f2826",
                 "requestBody": {
                     "required": true,
@@ -607,9 +607,7 @@
                                     "person_id",
                                     "name",
                                     "species",
-                                    "breed",
-                                    "age",
-                                    "image"
+                                    "age"
                                 ],
                                 "properties": {
                                     "person_id": {
@@ -623,10 +621,6 @@
                                     "species": {
                                         "type": "string",
                                         "example": "Perro"
-                                    },
-                                    "breed": {
-                                        "type": "string",
-                                        "example": "Labrador"
                                     },
                                     "age": {
                                         "type": "integer",
@@ -1023,12 +1017,12 @@
             "description": "Endpoints para el CRUD de personas"
         },
         {
-            "name": "Mascotas",
-            "description": "Endpoints para el CRUD de mascotas"
-        },
-        {
             "name": "Autenticación",
             "description": "Autenticación"
+        },
+        {
+            "name": "Mascotas",
+            "description": "Mascotas"
         }
     ]
 }
