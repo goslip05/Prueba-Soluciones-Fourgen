@@ -130,3 +130,10 @@ Puedes utilizar la documentación de Swagger para validar la documentación de l
 Puedes utilizar la siguiente colección de Postman para validar la documentación de la API del proyecto, así como para interactuar con los endpoints utilizados.
 
 <a href="https://documenter.getpostman.com/view/18148117/2sB2qXk3AE" target="_blank">Ver Colección Postman</a>
+
+## Usuario de pruebas
+
+Puedes utilizar la siguientes credenciales para iniciar sesión en el API y probar los endpoints:
+
+* Usuario: prueba@prueba.com
+* Password: 12345678
