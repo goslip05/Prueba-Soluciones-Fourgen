@@ -16,5 +16,10 @@ class People extends Model
         'birthday',
         'phone',
     ];
+
+    public function petsOfPerson()
+    {
+        return $this->hasMany(Pet::class, 'person_id');
+    }
     
 }

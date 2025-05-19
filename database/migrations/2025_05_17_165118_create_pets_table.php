@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('person_id');
             $table->string('name');
-            $table->string('species');
-            $table->string('breed');
+            $table->string('species')->nullable();
+            $table->string('breed')->nullable();
             $table->string('age');
-            $table->text('image');
+            $table->text('image')->nullable();
             $table->foreign('person_id')->references('id')->on('people')->onDelete('cascade');
             $table->timestamps();
         });

@@ -17,4 +17,9 @@ class Pet extends Model
         'age',
         'image',
     ];
+
+    public function person()
+    {
+        return $this->belongsTo(People::class);
+    }
 }
