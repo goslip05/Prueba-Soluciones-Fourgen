@@ -6,6 +6,7 @@ use App\Http\Requests\RegisterPersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
 use App\Http\Resources\PeopleCollection;
 use App\Http\Resources\PeopleResource;
+use App\Http\Resources\PetResource;
 use App\Models\Log;
 use App\Repositories\PeopleRepository;
 use Carbon\Carbon;
@@ -233,6 +234,50 @@ class PeopleController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/people/pets/{id}",
+     *     summary="Obtener una persona con sus mascotas",
+     *     tags={"Personas"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la persona",
+     *         required=true,
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Información de la persona con sus mascotas",
+     *         @OA\JsonContent(ref="#/components/schemas/PeopleWithPetsResource")
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error interno del servidor",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="boolean", example=false),
+     *             @OA\Property(property="info", type="string", example="Opss, no se pudieron obtener las mascotas de la persona"),
+     *             @OA\Property(property="message", type="string", example="Detalles del error")
+     *         )
+     *     )
+     * )
+     */
+
+    public function getPetsByPerson($id)
+    {
+        try {
+            $person = $this->peopleRepository->pets($id);
+            return new PeopleResource($person);
+        } catch (\Exception $e) {
+            $this->logError("Error al obtener mascotas de la persona", "people", $e->getMessage());
+            return response()->json([
+                'status' => 500,
+                'info' => 'Opss, no se pudieron obtener las mascotas de la persona',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
     public function logError($process, $table, $message)
     {
         return Log::insert([

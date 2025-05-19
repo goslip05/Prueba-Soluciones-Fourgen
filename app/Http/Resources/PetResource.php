@@ -7,7 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @OA\Schema(
  *     schema="PetResource",
- *     
+ *     type="object",
  *     @OA\Property(property="person_id", type="integer", example=2),
  *     @OA\Property(property="name", type="string", example="Gordon"),
  *     @OA\Property(property="species", type="string", example="Perro"),
