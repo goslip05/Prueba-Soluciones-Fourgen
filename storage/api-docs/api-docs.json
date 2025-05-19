@@ -492,6 +492,264 @@
                     }
                 ]
             }
+        },
+        "/api/pets": {
+            "get": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Listar todas las mascotas con paginación",
+                "operationId": "3e9c012f8679644450b04b1652f148c8",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número de página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Listado paginado de mascotas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PetCollection"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Registrar una nueva mascota",
+                "operationId": "9523721805529edb47b46332d56f2826",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "person_id",
+                                    "name",
+                                    "species",
+                                    "breed",
+                                    "age",
+                                    "image"
+                                ],
+                                "properties": {
+                                    "person_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Gordon"
+                                    },
+                                    "species": {
+                                        "type": "string",
+                                        "example": "Perro"
+                                    },
+                                    "breed": {
+                                        "type": "string",
+                                        "example": "Labrador"
+                                    },
+                                    "age": {
+                                        "type": "integer",
+                                        "example": 5
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Mascota creada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PetResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/pets/{id}": {
+            "get": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Mostrar los datos de una mascota",
+                "operationId": "25e25b195a59c4b940a33f9961ad6eed",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la mascota",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos de la mascota",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PetResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Actualizar datos de una mascota",
+                "operationId": "652be7eab297dff87f093d849bdecb12",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la mascota a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "person_id",
+                                    "name",
+                                    "species",
+                                    "breed",
+                                    "age",
+                                    "image"
+                                ],
+                                "properties": {
+                                    "person_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Gordon"
+                                    },
+                                    "species": {
+                                        "type": "string",
+                                        "example": "Perro"
+                                    },
+                                    "breed": {
+                                        "type": "string",
+                                        "example": "Labrador"
+                                    },
+                                    "age": {
+                                        "type": "integer",
+                                        "example": 5
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mascota actualizada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PetResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Eliminar una mascota",
+                "operationId": "dab25348cae9362e48ade0e7cf34c465",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la mascota a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mascota eliminada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Mascota eliminada correctamente"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -569,6 +827,84 @@
                     }
                 },
                 "type": "object"
+            },
+            "PetCollection": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PetResource"
+                        }
+                    },
+                    "meta": {
+                        "properties": {
+                            "current_page": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "last_page": {
+                                "type": "integer",
+                                "example": 5
+                            },
+                            "per_page": {
+                                "type": "integer",
+                                "example": 10
+                            },
+                            "total": {
+                                "type": "integer",
+                                "example": 50
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "links": {
+                        "properties": {
+                            "first": {
+                                "type": "string",
+                                "example": "http://localhost/api/pets?page=1"
+                            },
+                            "last": {
+                                "type": "string",
+                                "example": "http://localhost/api/pets?page=5"
+                            },
+                            "prev": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "next": {
+                                "type": "string",
+                                "example": "http://localhost/api/pets?page=2"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "PetResource": {
+                "properties": {
+                    "person_id": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Gordon"
+                    },
+                    "species": {
+                        "type": "string",
+                        "example": "Perro"
+                    },
+                    "breed": {
+                        "type": "string",
+                        "example": "Labrador"
+                    },
+                    "age": {
+                        "type": "integer",
+                        "example": 5
+                    }
+                },
+                "type": "object"
             }
         },
         "securitySchemes": {
@@ -583,6 +919,10 @@
         {
             "name": "Personas",
             "description": "Endpoints para el CRUD de personas"
+        },
+        {
+            "name": "Mascotas",
+            "description": "Endpoints para el CRUD de mascotas"
         },
         {
             "name": "Autenticación",

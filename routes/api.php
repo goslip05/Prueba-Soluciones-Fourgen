@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PeopleController;
+use App\Http\Controllers\PetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,5 +37,13 @@ Route::middleware('jwt.verify')->group(function () {
             Route::delete('/{id}', 'destroy')->name('people.destroy');
         });
 
-    
+    //rutas para administración de mascotas
+    Route::controller(PetController::class)
+        ->prefix('pets')->group(function () {
+            Route::get('/', 'getPets')->name('pets.getPets');
+            Route::post('/', 'store')->name('pets.store');
+            Route::get('/{id}', 'show')->name('pets.show');
+            Route::put('/{id}', 'update')->name('pets.update');
+            Route::delete('/{id}', 'destroy')->name('pets.destroy');
+        });
 });
