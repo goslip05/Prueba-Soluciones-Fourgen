@@ -108,7 +108,7 @@ Bienvenido. Esta es la prueba técnica para validar mis conocimientos y fortalez
 
 A continuación se muestra el diagrama de la base de datos que ilustra la estructura y relaciones entre las tablas de la aplicación:
 
-![Diagrama de la Base de Datos](https://github.com/goslip05/Prueba-Andes-Backend/blob/main/public/img/Diagrama_DB)
+![Diagrama de la Base de Datos](https://github.com/goslip05/prueba-soluciones-fourgen/blob/main/public/img/Diagrama_DB)
 
 
 ## Documentación del API en Swagger
