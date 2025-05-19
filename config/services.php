@@ -31,4 +31,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'cat_api' => [
+        'base_uri' => 'https://api.thecatapi.com/v1',
+        'key' => env('CAT_API_KEY'),
+    ],
+
+
 ];

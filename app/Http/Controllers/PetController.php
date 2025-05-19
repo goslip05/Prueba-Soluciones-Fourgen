@@ -8,23 +8,29 @@ use App\Http\Resources\PetCollection;
 use App\Http\Resources\PetResource;
 use App\Models\Log;
 use App\Repositories\PetRepository;
+use App\Services\External\CatAPI\CatsInfo\GetBreedInfoService;
+use App\Services\External\CatAPI\CatsInfo\GetImageForBreedService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
  * @OA\Tag(
+ * )
  *     name="Mascotas",
  *     description="Endpoints para el CRUD de mascotas"
- * )
  */
 class PetController extends Controller
 {
 
     protected $petRepository;
+    protected $getBreedInfoService;
+    protected $getImageForBreedService;
 
-    public function __construct(PetRepository $petRepository)
+    public function __construct(PetRepository $petRepository, GetBreedInfoService $getBreedInfoService, GetImageForBreedService $getImageForBreedService)
     {
         $this->petRepository = $petRepository;
+        $this->getBreedInfoService = $getBreedInfoService;
+        $this->getImageForBreedService = $getImageForBreedService;
     }
 
     /**
@@ -66,17 +72,16 @@ class PetController extends Controller
     /**
      * @OA\Post(
      *     path="/api/pets",
-     *     summary="Registrar una nueva mascota",
+     *     summary="Registrar una nueva mascota (raza e imagen se obtienen automáticamente desde TheCatAPI)",
      *     tags={"Mascotas"},
      *     security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"person_id","name","species", "breed", "age","image"},
+     *             required={"person_id","name","species", "age"},
      *             @OA\Property(property="person_id", type="integer", example=2),
      *             @OA\Property(property="name", type="string", example="Gordon"),
      *             @OA\Property(property="species", type="string", example="Perro"),
-     *             @OA\Property(property="breed", type="string", example="Labrador"),
      *             @OA\Property(property="age", type="integer", example=5),
      *       
      *        )
@@ -94,9 +99,19 @@ class PetController extends Controller
         try {
             //validar el request
             $data = $request->validated();
+            // Obtener datos aleatorios de una raza de gato desde el servicio de TheCatAPI
+            $breedData = $this->getBreedInfoService->getRandomBreed();
+
+            // Obtener una imagen para esa raza QUE SE obtuvo del servico de TheCatAPI
+            $image = $this->getImageForBreedService->getBreedImage($breedData['id'] ?? null);
+
+            // Completar datos antes de ENVIAR AL REPOSITORIO
+            $data['breed'] = $breedData['name'] ?? 'Unknown';
+            $data['image'] = $image;
 
             $person = $this->petRepository->create($data);
             return (new PetResource($person))->response()->setStatusCode(201);
+
         } catch (\Exception $e) {
             $this->logError("Error en el metodo para registrar una mascota", "pets", $e->getMessage());
             return response()->json([
